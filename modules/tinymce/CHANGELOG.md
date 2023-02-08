@@ -4,9 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 6.3.2 - 2023-02-22
+## Unreleased
+
+### Added
+- renderUI property in the `Theme` type can now return a `Promise<RenderResult>` instead of `RenderResult`. #TINY-9556
+- New `isEditable` API to `editor.selection` that returns true or false if the current selection is editable. #TINY-9462
+- New `isEditable` API to `editor.dom` that returns true or false if the specified node is editable. #TINY-9462
+- New `setText` and `setIcon` methods added to menu button and toolbar button apis. #TINY-9268
+- New `highlight_on_focus` option which enables highlighting the content area on focus. #TINY-9277
+- New `fontsizeinput` toolbar item which allows the user to set the size via input and also increase and decrease it with `+` and `-` buttons. #TINY-9429
+
+
+### Improved
+- Direct invalid child text nodes of list elements will be wrapped in list item elements. #TINY-4818
+
+### Changed
+- The `link` plugins context menu items will no longer appear for noneditable links. #TINY-9491
+- The formatting of `contenteditable="false"` elements are no longer cloned to new cells while creating new table rows. #TINY-9449
+- Changed the color of `@dialog-table-border-color`, and added right padding to the first cell of dialog table. #TINY-9380
 
 ### Fixed
+- Sometimes the editor would finish initializing before the silver theme would have finished loading. #TINY-9556 
+- The searchreplace modal would close incorrectly when clicking outside of the alert that pops up when no match is found. #TINY-9443
+- Color picker on toolbar would not update when changing forecolor or backcolor from menu. #TINY-9439
+- The `onSetup` api function would not run when defining custom group toolbar button. #TINY-9496
+- An element could be dropped onto the decendants of a noneditable element. #TINY-9364
+- Checkmark did not show in menu colorswatches. #TINY-9395
+- Toolbar split buttons in advlist plugin to show the correct state when the cursor is in a checklist. #TINY-5167
+- Dragging transparent elements into transparent blocks elements could produce invalid nesting of transparents. #TINY-9231
+- The `editor.insertContent` API would insert contents inside noneditable elements if the selection was inside the element. #TINY-9462
+- Closing a dialog would scroll down the document in Safari. #TINY-9148
+- Quick toolbars were incorrectly rendered during the dragging of `contenteditable="false"` elements. #TINY-9305
+- Selection of images, hrs, tables or noneditable elements was possible if they were within a noneditable element. #TINY-9473
+- Ranged deletion of formatted text using selection or keyboard shortcut would sometimes cause Blink and Webkit browsers to insert interpreted tags upon typing, which may result in inconsistent tags. #TINY-9302
+- Visual characters were rendered inside noneditable elements. #TINY-9474
 - Removed a workaround for ensuring stylesheets are loaded in an outdated version of webkit. #TINY-9433
 
 ## 6.3.1 - 2022-12-06
