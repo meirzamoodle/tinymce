@@ -29,7 +29,8 @@ const renderElementPath = (editor: Editor, settings: ElementPathSettings, provid
       classes: [ 'tox-statusbar__path-item' ],
       attributes: {
         'data-index': index,
-        'aria-level': index + 1
+        'aria-level': index + 1,
+        'role': 'listitem'
       }
     },
     components: [
@@ -51,7 +52,8 @@ const renderElementPath = (editor: Editor, settings: ElementPathSettings, provid
       tag: 'div',
       classes: [ 'tox-statusbar__path-divider' ],
       attributes: {
-        'aria-hidden': true
+        'aria-hidden': true,
+        'role': 'listitem'
       }
     },
     components: [
@@ -96,7 +98,7 @@ const renderElementPath = (editor: Editor, settings: ElementPathSettings, provid
       tag: 'div',
       classes: [ 'tox-statusbar__path' ],
       attributes: {
-        role: 'navigation'
+        role: 'list'
       }
     },
     behaviours: Behaviour.derive([
