@@ -24,6 +24,8 @@ export interface InlineHeader {
 
 const { ToolbarLocation, ToolbarMode } = Options;
 
+const maximumDistanceToEdge = 40;
+
 export const InlineHeader = (
   editor: Editor,
   targetElm: SugarElement<HTMLElement>,
@@ -114,7 +116,7 @@ export const InlineHeader = (
     });
   };
 
-  const updateChromePosition = () => {
+  const updateChromePosition = (optToolbarWidth: Optional<number>) => {
     floatContainer.on((container) => {
       const toolbar = OuterContainer.getToolbar(mainUi.outerContainer);
       const offset = calcToolbarOffset(toolbar);
@@ -199,9 +201,8 @@ export const InlineHeader = (
       ).getOr({ });
 
       Css.setAll(mainUi.outerContainer.element, {
-        position: 'absolute',
-        top: Math.round(top) + 'px',
-        left: Math.round(targetBounds.x) + 'px'
+        ...baseProperties,
+        ...widthProperties
       });
     });
   };
@@ -272,7 +273,8 @@ export const InlineHeader = (
 
     // Positioning
     if (!useFixedToolbarContainer) {
-      updateChromePosition();
+      // This will position the container in the right spot.
+      updateChromePosition(optToolbarWidth);
     }
 
     // Docking
