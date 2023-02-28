@@ -128,6 +128,41 @@ describe('browser.tinymce.themes.silver.window.SilverInlineDialogPositionTest', 
     });
   });
 
+  context('TINY-9554: dialog position with editor in fixed container', () => {
+    const setupElement = () => {
+      const container = SugarElement.fromHtml('<div class="container" style="position: fixed; top: 150px; left: 150px;"></div>');
+      const element = SugarElement.fromTag('textarea');
+
+      Insert.append(SugarBody.body(), container);
+      Insert.append(container, element);
+
+      return {
+        element,
+        teardown: () => {
+          Remove.remove(element);
+          Remove.remove(container);
+        }
+      };
+    };
+
+    const hook = TinyHooks.bddSetupFromElement<Editor>({
+      base_url: '/project/tinymce/js/tinymce',
+      height: 400,
+      width: 650,
+      menubar: false
+    }, setupElement, []);
+
+    it('TINY-9554: the dialog should be below the toolbar of the editor', () => {
+      const editor = hook.editor();
+      const dialog = openDialog(editor);
+      const editorToolbar = UiFinder.findIn(TinyDom.container(editor), '.tox-editor-header').getOrDie();
+
+      assert.isTrue(editorToolbar.dom.getBoundingClientRect().bottom < dialog.dom.getBoundingClientRect().top);
+
+      DialogUtils.close(editor);
+    });
+  });
+
   context('Bottom toolbar positioning', () => {
     Arr.each([
       { name: 'normal', settings: { ui_mode: 'combined' }},
